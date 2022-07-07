@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.DirectoryChooser;
 import java.io.File;
 
@@ -94,6 +95,12 @@ public class HelloController {
     @FXML
     private ImageView imgWB;
 
+    @FXML
+    private ColorPicker colorPicker1;
+
+    @FXML
+    private ColorPicker colorPicker2;
+
     private boolean IsProcessing = false;
 
     @FXML
@@ -109,6 +116,27 @@ public class HelloController {
             System.out.println("You've clicked!");
         });
          */
+
+
+
+        colorPicker1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                //circleColor.setFill(colorPicker.getValue());
+                System.out.println("Color1  = " + colorPicker1.getValue());
+            }
+        });
+
+        colorPicker2.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                //circleColor.setFill(colorPicker.getValue());
+                System.out.println("Color2  = " + colorPicker2.getValue());
+            }
+        });
+
     }
 
     public void OnClickChoiceButton(ActionEvent event) {
@@ -140,15 +168,7 @@ public class HelloController {
         }
         else
         {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Runtime error!");
-            alert.setHeaderText("The recognition process has already been started!");
-            alert.setContentText("Wait for the end of recognition and choose the path");
-            alert.showAndWait().ifPresent(rs -> {
-                if (rs == ButtonType.OK) {
-                    System.out.println("Pressed OK.");
-                }
-            });
+            MessegeBoxError("Runtime error!", "The recognition process has already been started!", "Wait for the end of recognition and choose the path");
         }
 
     }
@@ -166,15 +186,7 @@ public class HelloController {
             Path path = Paths.get(TextFieldDir.getText());
 
             if (TextFieldDir.getText().length() == 0) {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error path!");
-                alert.setHeaderText("Path not selected!");
-                alert.setContentText("Enter or select the correct path");
-                alert.showAndWait().ifPresent(rs -> {
-                    if (rs == ButtonType.OK) {
-                        System.out.println("Pressed OK.");
-                    }
-                });
+                MessegeBoxError("Error path!", "Path not selected!", "Enter or select the correct path");
             } else {
 
                 boolean parallel = true;    // Для отладки
@@ -237,15 +249,7 @@ public class HelloController {
                     IsProcessing = false;
 
                 } else {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error path!");
-                    alert.setHeaderText("Invalid path specified!");
-                    alert.setContentText("Enter or select the correct path");
-                    alert.showAndWait().ifPresent(rs -> {
-                        if (rs == ButtonType.OK) {
-                            System.out.println("Pressed OK.");
-                        }
-                    });
+                    MessegeBoxError("Error path!", "Invalid path specified!", "Enter or select the correct path");
                 }
             }
 
@@ -282,17 +286,22 @@ public class HelloController {
         }
         else
         {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Runtime error!");
-            alert.setHeaderText("The recognition process has already been started!");
-            alert.setContentText("Wait for the end of recognition and click again");
-            alert.showAndWait().ifPresent(rs -> {
-                if (rs == ButtonType.OK) {
-                    System.out.println("Pressed OK.");
-                }
-            });
+            MessegeBoxError("Runtime error!","The recognition process has already been started!", "Wait for the end of recognition and click again");
         }
 
+    }
+
+    public void MessegeBoxError(String Title, String HeaderText, String ContentText)
+    {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(Title);
+        alert.setHeaderText(HeaderText);
+        alert.setContentText(ContentText);
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println("Pressed OK.");
+            }
+        });
     }
 
 

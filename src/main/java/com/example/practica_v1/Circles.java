@@ -16,7 +16,7 @@ public class Circles {
 
     private List<Circle> ListCircles = new ArrayList<Circle>();
 
-    public boolean FindCircles(Mat ImgGray)
+    public boolean FindCircles(Mat ImgGray, RecognitionParameters parameters)
     {
         boolean Res = false;
 
@@ -33,7 +33,11 @@ public class Circles {
         //====
         //Imgproc.HoughCircles(workImg, circles, Imgproc.HOUGH_GRADIENT,1, workImg.rows() / 8, 100, 15, 0, 0);
 
-        Imgproc.HoughCircles(workImg, circles, Imgproc.HOUGH_GRADIENT,1, workImg.rows() / 8, 100, 15, 300, 400);
+        //Imgproc.HoughCircles(workImg, circles, Imgproc.HOUGH_GRADIENT,1, workImg.rows() / 8, 100, 15, 300, 400);
+
+        Imgproc.HoughCircles(workImg, circles, Imgproc.HOUGH_GRADIENT,parameters.getDp(), workImg.rows() / parameters.getDenominatorOfMinDist(),
+                parameters.getParam1(), parameters.getParam2(), parameters.getMinRadius(), parameters.getMaxRadius());
+
         //===
 
 
@@ -106,14 +110,14 @@ public class Circles {
         return Res;
     }
 
-    public boolean FindAndDrawCircles(Mat WightBlackImg, Mat DrawImg)
+    public boolean FindAndDrawCircles(Mat WightBlackImg, Mat DrawImg, RecognitionParameters parameters)
     {
         boolean Res = false;
 
         if (WightBlackImg.empty() || DrawImg.empty())
             return false;
 
-        if (FindCircles(WightBlackImg))
+        if (FindCircles(WightBlackImg, parameters))
         {
             if (DrawCircles(DrawImg))
             {

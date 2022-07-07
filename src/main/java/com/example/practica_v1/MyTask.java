@@ -10,6 +10,8 @@ public class MyTask extends Task {
     volatile private FilesAndDirs Frames;
     private String Path;
 
+    private RecognitionParameters parameters;
+
     public void SetHelloController(HelloController HelloController1)
     {
         HCController = HelloController1;
@@ -35,7 +37,7 @@ public class MyTask extends Task {
         //}
         Frames.SetMyTask(this);
         //Frames.MainProcess(Path, ".jpg");
-        Frames.MainProcessVariable2(Path, ".jpg");
+        Frames.MainProcessVariable2(Path, ".jpg", parameters);
 
         return null;
     }
@@ -44,5 +46,13 @@ public class MyTask extends Task {
     public void updateProgress(long workDone, long max) {
         HCController.PrintFrameInImgViews(Frames.GetFrameInListIndex((int) workDone));
         HCController.ProgressBarMain.setProgress(((double) workDone + 1) / (double) max);
+    }
+
+    public RecognitionParameters getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(RecognitionParameters parameters) {
+        this.parameters = parameters;
     }
 }

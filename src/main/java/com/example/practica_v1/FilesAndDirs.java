@@ -19,6 +19,8 @@ public class FilesAndDirs {
 
     protected frame CurrentFrame;
 
+    protected RecognitionParameters paramsRecogn;
+
     volatile protected MyTask myTask;
 
     public void SetMyTask(MyTask myTask1)
@@ -40,6 +42,12 @@ public class FilesAndDirs {
             return ListOfFrames.get(index);
 
         else return null;
+    }
+
+    public void SetParamsRecognized(RecognitionParameters parameters)
+    {
+        paramsRecogn = new RecognitionParameters(parameters.getDp(), parameters.getDenominatorOfMinDist(),
+                parameters.getParam1(), parameters.getParam2(),parameters.getMinRadius(),parameters.getMaxRadius());
     }
 
     public void SetDirPath(String path)
@@ -325,7 +333,7 @@ public class FilesAndDirs {
 
             // = new frame(DirPath, ListOfNeededFiles.get(i));
 
-            ListOfFrames.get(i).WorkWithFrame();
+            ListOfFrames.get(i).WorkWithFrame(paramsRecogn);
 
             if (ListOfFrames.get(i).GetIsRecognized())
             {
@@ -343,8 +351,9 @@ public class FilesAndDirs {
     }
 
 
-    public void MainProcessVariable2(String Path, String TypeOfFiles)
+    public void MainProcessVariable2(String Path, String TypeOfFiles, RecognitionParameters parameters)
     {
+        SetParamsRecognized(parameters);
         SetDirPath(Path);
         SelectTypeFilesOfListFiles(FilesInDirToList(Path), ".jpg");
         CreateWorkingDirs(Path);

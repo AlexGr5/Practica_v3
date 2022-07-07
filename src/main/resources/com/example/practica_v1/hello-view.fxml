@@ -59,5 +59,17 @@
       </ColorPicker>
       <Label layoutX="26.0" layoutY="506.0" text="Начальный цвет распознования" />
       <Label layoutX="221.0" layoutY="506.0" text="Конечный цвет распознования" />
+      <TextField fx:id="dpTextField" layoutX="447.0" layoutY="535.0" prefHeight="25.0" prefWidth="46.0" text="1" />
+      <Label layoutX="447.0" layoutY="506.0" text="dp" />
+      <TextField fx:id="minDistTextField" layoutX="529.0" layoutY="535.0" prefHeight="25.0" prefWidth="46.0" text="8" />
+      <Label layoutX="529.0" layoutY="506.0" text="MinDist" />
+      <TextField fx:id="param1TextField" layoutX="610.0" layoutY="535.0" prefHeight="25.0" prefWidth="56.0" text="100" />
+      <Label layoutX="610.0" layoutY="506.0" text="param1" />
+      <TextField fx:id="param2TextField" layoutX="702.0" layoutY="535.0" prefHeight="25.0" prefWidth="56.0" text="15" />
+      <Label layoutX="702.0" layoutY="506.0" text="param2" />
+      <TextField fx:id="minRadiusTextField" layoutX="788.0" layoutY="535.0" prefHeight="25.0" prefWidth="56.0" text="300" />
+      <Label layoutX="788.0" layoutY="506.0" text="minRadius" />
+      <TextField fx:id="maxRadiusTextField" layoutX="876.0" layoutY="535.0" prefHeight="25.0" prefWidth="56.0" text="400" />
+      <Label layoutX="876.0" layoutY="506.0" text="maxRadius" />
    </children>
 </AnchorPane>

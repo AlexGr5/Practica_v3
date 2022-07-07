@@ -284,6 +284,35 @@ public void IncreasingSaturation() {
         }
     }
 
+
+    public void SaturationImgToWightAndBlack()
+    {
+        if (imgTemp.GetImg().empty()) {
+            System.out.println("Saturation Img is empty");
+            return;
+        }
+
+        Mat img = imgTemp.GetImg().clone();
+
+        //CvUtilsFX.showImage(img, "Оригинал");
+        Mat hsv = new Mat();
+        Imgproc.cvtColor(img, hsv, Imgproc.COLOR_BGR2HSV);
+        Mat h = new Mat();
+        Core.extractChannel(hsv, h, 0);
+        Mat img2 = new Mat();
+        Core.inRange(h, new Scalar(40), new Scalar(80), img2);
+        //CvUtilsFX.showImage(img2, "Зеленый");
+        Core.inRange(h, new Scalar(100), new Scalar(140), img2);
+        //CvUtilsFX.showImage(img2, "Синий");
+        Core.inRange(hsv, new Scalar(0, 200, 200), new Scalar(20, 256, 256), img2);
+        //CvUtilsFX.showImage(img2, "Красный");
+        Core.inRange(hsv, new Scalar(0, 0, 0), new Scalar(0, 0, 50), img2);
+        //CvUtilsFX.showImage(img2, "Черный");
+
+        imgWhiteBlack.SetImg(img2.clone());
+    }
+
+
     public void MainColorToGray()
     {
         if (imgMainColor.GetImg().empty()) {
@@ -342,7 +371,7 @@ public void IncreasingSaturation() {
     }
      */
 
-    public boolean RecognizeAndDrawCircles()
+    public boolean RecognizeAndDrawCircles(RecognitionParameters parameters)
     {
         boolean Res = false;
 
@@ -350,7 +379,7 @@ public void IncreasingSaturation() {
             return false;
 
         imgRecognized.SetImg(imgOriginal.GetImg().clone());
-        if (circles.FindAndDrawCircles(imgWhiteBlack.GetImg(), imgRecognized.GetImg()))
+        if (circles.FindAndDrawCircles(imgWhiteBlack.GetImg(), imgRecognized.GetImg(), parameters))
         {
             Res = true;
             isRecognised = true;
@@ -359,14 +388,14 @@ public void IncreasingSaturation() {
         return Res;
     }
 
-    public synchronized void WorkWithFrame()
+    public synchronized void WorkWithFrame(RecognitionParameters parameters)
     {
         IncreasingSaturation();
         BlurRichImg();
         OriginalToMainColor();
         MainColorToGray();
         //BlurWightBlackImg();
-        RecognizeAndDrawCircles();
+        RecognizeAndDrawCircles(parameters);
     }
 
     public void BlurRichImg()

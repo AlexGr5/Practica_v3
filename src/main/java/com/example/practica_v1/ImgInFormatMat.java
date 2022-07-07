@@ -21,7 +21,7 @@ public class ImgInFormatMat {
 
     public ImgInFormatMat(Mat img, String path, String name, String information)
     {
-        Img = img;
+        Img = img.clone();
         Path = path;
         //Name = name;
         info = information;
@@ -29,7 +29,7 @@ public class ImgInFormatMat {
 
     public void SetImgInFormatMat(Mat img, String path, String name, String information)
     {
-        Img = img;
+        Img = img.clone();
         Path = path;
         //Name = name;
         info = information;
@@ -41,7 +41,7 @@ public class ImgInFormatMat {
     }
     public void SetImg(Mat newImg)
     {
-        Img = newImg;
+        Img = newImg.clone();
     }
 
     public String GetInfo()

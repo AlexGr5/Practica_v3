@@ -81,6 +81,24 @@ public class HelloController {
     private TextField TextFieldDir;
 
     @FXML
+    private TextField dpTextField;
+
+    @FXML
+    private TextField minDistTextField;
+
+    @FXML
+    private TextField param1TextField;
+
+    @FXML
+    private TextField param2TextField;
+
+    @FXML
+    private TextField minRadiusTextField;
+
+    @FXML
+    private TextField maxRadiusTextField;
+
+    @FXML
     private Button btChoice;
 
     @FXML
@@ -137,6 +155,42 @@ public class HelloController {
             }
         });
 
+        dpTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                dpTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        minDistTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                minDistTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        param1TextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                param1TextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        param2TextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                param2TextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        minRadiusTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                minRadiusTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        maxRadiusTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                maxRadiusTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
     }
 
     public void OnClickChoiceButton(ActionEvent event) {
@@ -184,6 +238,11 @@ public class HelloController {
             FilesAndDirs NewFrames = new FilesAndDirs();
 
             Path path = Paths.get(TextFieldDir.getText());
+
+            RecognitionParameters temp = new RecognitionParameters(Integer.parseInt(dpTextField.getText()),
+                    Integer.parseInt(minDistTextField.getText()), Integer.parseInt(param1TextField.getText()),
+                    Integer.parseInt(param2TextField.getText()), Integer.parseInt(minRadiusTextField.getText()),
+                    Integer.parseInt(maxRadiusTextField.getText()));
 
             if (TextFieldDir.getText().length() == 0) {
                 MessegeBoxError("Error path!", "Path not selected!", "Enter or select the correct path");
@@ -236,6 +295,9 @@ public class HelloController {
                     //==========================================================================
                      */
                         //ProgressBarMain.setProgress(0.0);
+
+
+                        task.setParameters(temp);
                         task.SetFrames(NewFrames);
                         task.SetHelloController(this);
                         task.SetPath(TextFieldDir.getText());
@@ -243,7 +305,7 @@ public class HelloController {
                         new Thread(task).start();
                     } else {
                         //NewFrames.MainProcess(TextFieldDir.getText(), ".jpg");
-                        NewFrames.MainProcessVariable2(TextFieldDir.getText(), ".jpg");
+                        NewFrames.MainProcessVariable2(TextFieldDir.getText(), ".jpg", temp);
                     }
 
                     IsProcessing = false;

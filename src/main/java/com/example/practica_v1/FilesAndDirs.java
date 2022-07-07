@@ -311,31 +311,35 @@ public class FilesAndDirs {
             {
                 Res = true;
 
-                for (int i = 0; i < ListOfNeededFiles.size(); i++)
-                {
-                    ListOfFrames.add(new frame(DirPath + "/" + ListOfNeededFiles.get(i)));
-
-                    // = new frame(DirPath, ListOfNeededFiles.get(i));
-
-                    ListOfFrames.get(i).WorkWithFrame();
-
-                    if (ListOfFrames.get(i).GetIsRecognized())
-                    {
-                        System.out.println("Img " + DirPath + "/" + ListOfNeededFiles.get(i) + " is recognized!");
-                    }
-                    else {
-
-                        System.out.println("Img " + DirPath + "/" + ListOfNeededFiles.get(i) + " is not recognized!");
-                    }
-
-                    myTask.updateProgress((long)i,(long)ListOfNeededFiles.size());
-
-                    SaveFrame(i);
-                }
+                LoadProcessingRecognizeSendToDisplaySave();
             }
         }
 
         return Res;
+    }
+
+    private void LoadProcessingRecognizeSendToDisplaySave() {
+        for (int i = 0; i < ListOfNeededFiles.size(); i++)
+        {
+            ListOfFrames.add(new frame(DirPath + "/" + ListOfNeededFiles.get(i)));
+
+            // = new frame(DirPath, ListOfNeededFiles.get(i));
+
+            ListOfFrames.get(i).WorkWithFrame();
+
+            if (ListOfFrames.get(i).GetIsRecognized())
+            {
+                System.out.println("Img " + DirPath + "/" + ListOfNeededFiles.get(i) + " is recognized!");
+            }
+            else {
+
+                System.out.println("Img " + DirPath + "/" + ListOfNeededFiles.get(i) + " is not recognized!");
+            }
+
+            myTask.updateProgress((long)i,(long)ListOfNeededFiles.size());
+
+            SaveFrame(i);
+        }
     }
 
 

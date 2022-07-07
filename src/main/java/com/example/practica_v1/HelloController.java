@@ -302,6 +302,31 @@ public class HelloController {
             if (frame1.GetIsRecognized()) {
                 //LabelRecognized.setText("Is Recognized!");
 
+                PrintImgInImgView(imgOrig, frame1.GetOriginal());
+                PrintImgInImgView(imgMainColor, frame1.GetTemp());
+                PrintImgInImgView(imgWB, frame1.GetMainColor());
+                PrintImgInImgView(imgRecogn, frame1.GetRecognized());
+
+            } else {
+                //LabelRecognized.setText("Is NOT Recognized!");
+
+                PrintImgInImgView(imgOrig, frame1.GetOriginal());
+                PrintImgInImgView(imgMainColor, frame1.GetTemp());
+                PrintImgInImgView(imgWB, frame1.GetMainColor());
+
+                imgRecogn.setImage(null);
+            }
+
+        }
+    }
+
+    /*
+    public void PrintFrameInImgViews(frame frame1) {
+        if (frame1 != null) {
+
+            if (frame1.GetIsRecognized()) {
+                //LabelRecognized.setText("Is Recognized!");
+
                 MatOfByte bufOrig = new MatOfByte();
                 boolean stOrig = Imgcodecs.imencode(".jpg", frame1.GetOriginal(), bufOrig, new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100));
                 Image imOrig = new Image(new ByteArrayInputStream(bufOrig.toArray()));
@@ -344,8 +369,17 @@ public class HelloController {
 
         }
     }
+     */
 
 
+
+    public void PrintImgInImgView(ImageView ImgView, Mat img)
+    {
+        MatOfByte bufOrig = new MatOfByte();
+        boolean stOrig = Imgcodecs.imencode(".jpg", img, bufOrig, new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, 100));
+        Image imOrig = new Image(new ByteArrayInputStream(bufOrig.toArray()));
+        ImgView.setImage(imOrig);
+    }
 
 
 

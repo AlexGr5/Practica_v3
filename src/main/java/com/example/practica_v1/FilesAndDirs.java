@@ -189,6 +189,7 @@ public class FilesAndDirs {
         return Res;
     }
 
+    /*
     public boolean LoadListFrames()
     {
         boolean Res = false;
@@ -207,7 +208,10 @@ public class FilesAndDirs {
 
         return Res;
     }
+     */
 
+
+    /*
     public void ProcessingFrames()
     {
         for (int i = 0; i < ListOfNeededFiles.size(); i++) {
@@ -224,7 +228,10 @@ public class FilesAndDirs {
             myTask.updateProgress((long)i,(long)ListOfNeededFiles.size());
         }
     }
+     */
 
+
+    /*
     public void SaveFrames()
     {
         for (int i = 0; i < ListOfNeededFiles.size(); i++) {
@@ -254,7 +261,10 @@ public class FilesAndDirs {
             }
         }
     }
+     */
 
+
+    /*
     public void MainProcess(String Path, String TypeOfFiles)
     {
         SetDirPath(Path);
@@ -267,6 +277,8 @@ public class FilesAndDirs {
 
         System.out.println("\n\nRecognizing end");
     }
+     */
+
 
     public void SaveFrame(int index)
     {
@@ -308,7 +320,7 @@ public class FilesAndDirs {
 
                 for (int i = 0; i < ListOfNeededFiles.size(); i++)
                 {
-                    ListOfFrames.add(new frame(DirPath, ListOfNeededFiles.get(i)));
+                    ListOfFrames.add(new frame(DirPath + "/" + ListOfNeededFiles.get(i)));
 
                     // = new frame(DirPath, ListOfNeededFiles.get(i));
 

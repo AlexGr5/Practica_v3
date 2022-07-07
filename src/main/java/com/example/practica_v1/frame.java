@@ -20,6 +20,7 @@ import org.opencv.core.Size;
 public class frame {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
 
+    /*
     private Mat imgOriginal;
     private String pathOriginal;
     private String nameOriginal;
@@ -32,7 +33,14 @@ public class frame {
     private String pathWhiteBlack;
     private Mat imgRecognized;
     private String pathRecognized;
+     */
 
+
+    private ImgInFormatMat imgOriginal;
+    private ImgInFormatMat imgTemp;
+    private ImgInFormatMat imgMainColor;
+    private ImgInFormatMat imgWhiteBlack;
+    private ImgInFormatMat imgRecognized;
 
     private Circles circles = new Circles();
 
@@ -50,38 +58,52 @@ public class frame {
 
     public frame()
     {
-        ;
+        imgOriginal = new ImgInFormatMat();
+        imgTemp = new ImgInFormatMat();
+        imgWhiteBlack = new ImgInFormatMat();
+        imgMainColor = new ImgInFormatMat();
+        imgRecognized = new ImgInFormatMat();
     }
 
-    public frame(String pathForOriginImg, String NameOriginImg)
+    public frame(String pathForOriginImg)
     {
-        ReadImgOriginal(pathForOriginImg, NameOriginImg);
+        imgOriginal = new ImgInFormatMat();
+        imgTemp = new ImgInFormatMat();
+        imgWhiteBlack = new ImgInFormatMat();
+        imgMainColor = new ImgInFormatMat();
+        imgRecognized = new ImgInFormatMat();
+
+        ReadImgOriginal(pathForOriginImg);
     }
 
 
     public Mat GetOriginal()
     {
-        return imgOriginal;
+        return imgOriginal.GetImg();
     }
     public Mat GetTemp()
     {
-        return imgTemp;
+        return imgTemp.GetImg();
     }
     public Mat GetMainColor()
     {
-        return imgMainColor;
+        return imgMainColor.GetImg();
     }
     public Mat GetWight()
     {
-        return imgWhiteBlack;
+        return imgWhiteBlack.GetImg();
     }
     public Mat GetRecognized()
     {
-        return imgRecognized;
+        return imgRecognized.GetImg();
     }
 
-    public boolean ReadImgOriginal(String path, String name)
+    public boolean ReadImgOriginal(String path)
     {
+        if(imgOriginal.ReadImg(path, "original"))
+            return true;
+        else return false;
+        /*
         this.imgOriginal = Imgcodecs.imread(path + "/" + name);
         this.pathOriginal = new String(path);
         this.nameOriginal = new String(name);
@@ -93,21 +115,29 @@ public class frame {
             System.out.println("File:' " + pathOriginal + "/" + nameOriginal + " opened");
             return true;
         }
+         */
     }
 
-public void WriteOriginal(String newFullPath) {
+    public void WriteOriginal(String newFullPath) {
 
-    boolean st = Imgcodecs.imwrite(newFullPath, imgOriginal);
-    if (!st) {
-        System.out.println("Failed to save original image");
+        imgOriginal.WriteImg(newFullPath, "original");
+
+        /*
+        boolean st = Imgcodecs.imwrite(newFullPath, imgOriginal);
+        if (!st) {
+            System.out.println("Failed to save original image");
+        }
+        else {
+            System.out.println("File:' " + newFullPath + " saved");
+        }
+        */
+
     }
-    else {
-        System.out.println("File:' " + newFullPath + " saved");
-    }
-}
 
     public void WriteMainColor(String newFullPath) {
 
+        imgMainColor.WriteImg(newFullPath, "MainColor");
+        /*
         boolean st = Imgcodecs.imwrite(newFullPath, imgMainColor);
         if (!st) {
             System.out.println("Failed to save image in primary color");
@@ -115,11 +145,15 @@ public void WriteOriginal(String newFullPath) {
         else {
             System.out.println("File:' " + newFullPath + " saved");
         }
+         */
     }
 
 
     public void WriteTemp(String newFullPath) {
 
+        imgTemp.WriteImg(newFullPath, "temp");
+
+        /*
         boolean st = Imgcodecs.imwrite(newFullPath, imgTemp);
         if (!st) {
             System.out.println("Failed to save 'rich' image");
@@ -127,10 +161,14 @@ public void WriteOriginal(String newFullPath) {
         else {
             System.out.println("File:' " + newFullPath + " saved");
         }
+         */
     }
 
     public void WriteWhiteBlack(String newFullPath) {
 
+        imgWhiteBlack.WriteImg(newFullPath, "White and Black");
+
+        /*
         boolean st = Imgcodecs.imwrite(newFullPath, imgWhiteBlack);
         if (!st) {
             System.out.println("Failed to save black and white image");
@@ -138,10 +176,14 @@ public void WriteOriginal(String newFullPath) {
         else {
             System.out.println("File:' " + newFullPath + " saved");
         }
+         */
     }
 
     public void WriteRecognised(String newFullPath) {
 
+        imgOriginal.WriteImg(newFullPath, "original");
+
+        /*
         if (!imgRecognized.empty()) {
             boolean st = Imgcodecs.imwrite(newFullPath, imgRecognized);
             if (!st) {
@@ -150,22 +192,23 @@ public void WriteOriginal(String newFullPath) {
                 System.out.println("File:' " + newFullPath + " saved");
             }
         }
+         */
     }
 
 public void IncreasingSaturation() {
 
-    if (imgOriginal.empty())
+    if (imgOriginal.GetImg().empty())
     {
         ;
     }
     else {
         Mat imgHSV = new Mat();
-        Imgproc.cvtColor(imgOriginal, imgHSV, Imgproc.COLOR_BGR2HSV);
+        Imgproc.cvtColor(imgOriginal.GetImg(), imgHSV, Imgproc.COLOR_BGR2HSV);
         // Увеличение насыщенности
         Core.add(imgHSV, new Scalar(0, 40, 0), imgHSV);
         Mat imgBGR = new Mat();
         Imgproc.cvtColor(imgHSV, imgBGR, Imgproc.COLOR_HSV2BGR);
-        imgTemp = imgBGR;
+        imgTemp.SetImg(imgBGR);
     }
 }
 
@@ -178,7 +221,7 @@ public void IncreasingSaturation() {
     public void OriginalToMainColor()
     {
 
-        Mat WorkImg = imgTemp;
+        Mat WorkImg = imgTemp.GetImg();
 
         if (WorkImg.empty())
         {
@@ -186,7 +229,7 @@ public void IncreasingSaturation() {
         }
         else {
             // Создаём новое пустое изображение, такого же размера
-            imgMainColor = new Mat(WorkImg.rows(), WorkImg.cols(), WorkImg.type());
+            imgMainColor.SetImg(new Mat(WorkImg.rows(), WorkImg.cols(), WorkImg.type()));
 
             int channels = WorkImg.channels();// Получить количество каналов изображения
             double[] pixel = new double[3];
@@ -232,7 +275,7 @@ public void IncreasingSaturation() {
 
                     // Установим этот цвет в пиксель нового изображения
                     //im2.put(x, y, arr);
-                    imgMainColor.put(x, y, pixel);
+                    imgMainColor.GetImg().put(x, y, pixel);
                 }
             }
             // Сохраним результат в файл
@@ -243,17 +286,17 @@ public void IncreasingSaturation() {
 
     public void MainColorToGray()
     {
-        if (imgMainColor.empty()) {
+        if (imgMainColor.GetImg().empty()) {
             System.out.println("MainColor is empty");
         }
         else {
             Mat img2 = new Mat();
-            Imgproc.cvtColor(imgMainColor, img2, Imgproc.COLOR_BGR2GRAY);
+            Imgproc.cvtColor(imgMainColor.GetImg(), img2, Imgproc.COLOR_BGR2GRAY);
             Mat img3 = new Mat();
             double thresh = Imgproc.threshold(img2, img3, 100, 255,
                     Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
             //System.out.println(thresh);
-            imgWhiteBlack = img3;
+            imgWhiteBlack.SetImg(img3);
         }
     }
 
@@ -303,11 +346,11 @@ public void IncreasingSaturation() {
     {
         boolean Res = false;
 
-        if (imgWhiteBlack.empty() || imgOriginal.empty())
+        if (imgWhiteBlack.GetImg().empty() || imgOriginal.GetImg().empty())
             return false;
 
-        imgRecognized = imgOriginal.clone();
-        if (circles.FindAndDrawCircles(imgWhiteBlack, imgRecognized))
+        imgRecognized.SetImg(imgOriginal.GetImg().clone());
+        if (circles.FindAndDrawCircles(imgWhiteBlack.GetImg(), imgRecognized.GetImg()))
         {
             Res = true;
             isRecognised = true;
@@ -328,12 +371,12 @@ public void IncreasingSaturation() {
 
     public void BlurRichImg()
     {
-        Imgproc.blur(imgTemp, imgTemp, new Size(3, 3));
+        Imgproc.blur(imgTemp.GetImg(), imgTemp.GetImg(), new Size(3, 3));
     }
 
     public void BlurWightBlackImg()
     {
-        Imgproc.blur(imgWhiteBlack, imgWhiteBlack, new Size(3, 3));
+        Imgproc.blur(imgWhiteBlack.GetImg(), imgWhiteBlack.GetImg(), new Size(3, 3));
     }
 
     public void OriginalToWhiteBlack()

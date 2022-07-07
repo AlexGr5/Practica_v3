@@ -230,7 +230,8 @@ public class HelloController {
                         NewFrames.SetMyTask(task);
                         new Thread(task).start();
                     } else {
-                        NewFrames.MainProcess(TextFieldDir.getText(), ".jpg");
+                        //NewFrames.MainProcess(TextFieldDir.getText(), ".jpg");
+                        NewFrames.MainProcessVariable2(TextFieldDir.getText(), ".jpg");
                     }
 
                     IsProcessing = false;

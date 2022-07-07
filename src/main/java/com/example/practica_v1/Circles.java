@@ -12,7 +12,9 @@ import java.util.List;
 
 public class Circles {
 
-    private List<double[]> ListCircles = new ArrayList<double[]>();
+    //private List<double[]> ListCircles = new ArrayList<double[]>();
+
+    private List<Circle> ListCircles = new ArrayList<Circle>();
 
     public boolean FindCircles(Mat ImgGray)
     {
@@ -59,7 +61,8 @@ public class Circles {
                 //Imgproc.circle(result, new Point(circle[0], circle[1]),
                 //        (int) circle[2], purple);
 
-                ListCircles.add(new double[] {circle[0] - circle[2], circle[1] - circle[2], circle[0] + circle[2], circle[1] + circle[2]});
+                //ListCircles.add(new double[] {circle[0] - circle[2], circle[1] - circle[2], circle[0] + circle[2], circle[1] + circle[2]});
+                ListCircles.add(new Circle (circle[0], circle[1], circle[2]));
 
                 //Imgproc.rectangle(result, new Point(circle[0] - circle[2], circle[1] - circle[2]),
                 //        new Point(circle[0] + circle[2], circle[1] + circle[2]), purple, 5);
@@ -85,7 +88,12 @@ public class Circles {
 
         if (ListCircles.size() > 0) {
             for (int i = 0; i < ListCircles.size(); i++) {
-                double[] rect = ListCircles.get(i);
+
+                Circle temp = new Circle(ListCircles.get(i));
+
+                //double[] rect = ListCircles.get(i);
+                double[] rect = {temp.getX() - temp.getRadius(), temp.getY() - temp.getRadius(), temp.getX() + temp.getRadius(), temp.getY() + temp.getRadius()};
+
 
                 //System.out.println(Arrays.toString(rect));
 

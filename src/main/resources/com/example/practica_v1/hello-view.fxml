@@ -71,5 +71,9 @@
       <Label layoutX="788.0" layoutY="506.0" text="minRadius" />
       <TextField fx:id="maxRadiusTextField" layoutX="876.0" layoutY="535.0" prefHeight="25.0" prefWidth="56.0" text="400" />
       <Label layoutX="876.0" layoutY="506.0" text="maxRadius" />
+      <Line endX="123.00003051757812" endY="1.52587890625E-5" layoutX="121.0" layoutY="233.0" startX="-104.42855834960938" startY="1.52587890625E-5" />
+      <Line endX="115.14285278320312" endY="-1.6428680419921875" layoutX="129.0" layoutY="67.0" startX="-113.42855834960938" startY="-1.6428680419921875" />
+      <Line endX="-98.92855834960938" endY="-194.1428680419922" layoutX="115.0" layoutY="261.0" startX="-98.92855834960938" startY="-28.499984741210938" />
+      <Line endX="97.64285278320312" endY="-202.1428680419922" layoutX="147.0" layoutY="267.0" startX="97.50003051757812" startY="-34.49998474121094" />
    </children>
 </AnchorPane>

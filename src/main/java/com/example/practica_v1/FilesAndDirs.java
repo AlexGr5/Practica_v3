@@ -1,28 +1,10 @@
 package com.example.practica_v1;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 
-import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-
-import org.opencv.core.MatOfByte;
-import org.opencv.core.MatOfInt;
-import java.io.ByteArrayInputStream;
-import javafx.scene.image.Image;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.core.Scalar;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 
 
 public class FilesAndDirs {
@@ -124,11 +106,21 @@ public class FilesAndDirs {
         String TempName = "/Temp";
         String SceneName = "/Scene";
 
+        Directory dirSuccessful = new Directory(MainPath + SuccessfulName);
+        Directory dirUnsuccessful = new Directory(MainPath + UnsuccessfulName);
+        Directory dirTemp = new Directory(MainPath + TempName);
+        
+        if(dirSuccessful.CreateDir())
+            if(dirUnsuccessful.CreateDir())
+                if(dirTemp.CreateDir())
+                    Res = true;
+        
+        /*
         Path pathSuccessful = Paths.get(MainPath + SuccessfulName);
         Path pathUnsuccessful = Paths.get(MainPath + UnsuccessfulName);
         Path pathTemp = Paths.get(MainPath + TempName);
         Path pathScene = Paths.get(MainPath + SceneName);
-
+        
         if (!Files.exists(pathSuccessful)) {
             try {
                 Files.createDirectory(pathSuccessful);
@@ -185,6 +177,7 @@ public class FilesAndDirs {
             Res = false;
             System.out.println("Directory already exists");
         }
+         */
 
         return Res;
     }
@@ -308,7 +301,7 @@ public class FilesAndDirs {
         }
     }
 
-    public boolean ImageProcessingOneByOne()
+    public boolean ImageListProcessing()
     {
         boolean Res = false;
 
@@ -352,7 +345,7 @@ public class FilesAndDirs {
         SelectTypeFilesOfListFiles(FilesInDirToList(Path), ".jpg");
         CreateWorkingDirs(Path);
 
-        ImageProcessingOneByOne();
+        ImageListProcessing();
 
         System.out.println("\n\nRecognizing end");
     }

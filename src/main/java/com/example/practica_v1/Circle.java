@@ -10,7 +10,7 @@ public class Circle {
 
     public Circle()
     {
-
+        ;
     }
 
     public Circle(Circle circle)

@@ -312,11 +312,44 @@ public void IncreasingSaturation() {
                     double green = pixel[1];
                     double red = pixel[2];
 
+                    double maxValuePixel;
+                    double maxValueColor;
+
+                    maxValuePixel = Math.max(Math.max(red, green),blue);
+                    maxValueColor = Math.max(Math.max(colorParams.getRed(), colorParams.getGreen()), colorParams.getBlue());
+
+                    double mainChoiceColor = 0;
+                    double addColor1 = 0;
+                    double addColor2 = 0;
+
+                    if(maxValueColor == colorParams.getRed()) {
+                        mainChoiceColor = red;
+                        addColor1 = green;
+                        addColor2 = blue;
+                    }
+                    if(maxValueColor == colorParams.getGreen()) {
+                        mainChoiceColor = green;
+                        addColor1 = red;
+                        addColor2 = blue;
+                    }
+                    if(maxValueColor == colorParams.getBlue()) {
+                        mainChoiceColor = blue;
+                        addColor1 = green;
+                        addColor2 = red;
+                    }
 
                     // Если красного много - сделаем полносью красный
                     //if ((red > (blue + mainColor)) && (red > (green + mainColor))) {
-                    if(Math.sqrt((colorParams.getRed() - red)*(colorParams.getRed() - red)+(colorParams.getGreen() - green)*
-                            (colorParams.getGreen() - green)+(colorParams.getBlue() - blue)*(colorParams.getBlue() - blue)) <= colorParams.getDelta()){
+                    /*if(    Math.sqrt((colorParams.getRed() - red)*(colorParams.getRed() - red)+
+                            (colorParams.getGreen() - green)*(colorParams.getGreen() - green)
+                            +(colorParams.getBlue() - blue)*(colorParams.getBlue() - blue)) <= colorParams.getDelta()
+                               ||     ((Math.abs(maxValueColor - mainChoiceColor) <= colorParams.getDelta())) ){ */
+                    //if ((maxValueColor > (addColor1 + colorParams.getDelta())) && (maxValueColor > (addColor2 + colorParams.getDelta()))) {
+                    /*if ((Math.abs(red - colorParams.getRed())) <= colorParams.getDelta() &&
+                            Math.abs(green - colorParams.getGreen()) >= colorParams.getDelta() &&
+                            Math.abs(blue - colorParams.getBlue()) >= colorParams.getDelta()) {*/
+                    if ((mainChoiceColor > (addColor1 + colorParams.getDelta())) &&
+                            (mainChoiceColor > (addColor2 + colorParams.getDelta()))){
                         red = 255;
                         green = 0;
                         blue = 0;

@@ -54,6 +54,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 
+
 public class HelloController {
 
     @FXML
@@ -70,6 +71,9 @@ public class HelloController {
 
     @FXML
     private Label LabelRecognized;
+
+    @FXML
+    private Label labelColor;
 
     @FXML
     public ProgressBar ProgressBarMain;
@@ -99,7 +103,13 @@ public class HelloController {
     private TextField maxRadiusTextField;
 
     @FXML
+    private TextField DeltaTextField;
+
+    @FXML
     private Button btChoice;
+
+    @FXML
+    private Button ButSettingsDefalt;
 
     @FXML
     private ImageView imgMainColor;
@@ -117,14 +127,23 @@ public class HelloController {
     private ColorPicker colorPicker1;
 
     @FXML
-    private ColorPicker colorPicker2;
+    private RadioButton RButColor;
 
     private boolean IsProcessing = false;
+
+    private boolean ISAutomaticColor = true;
+
+    private double red = 255;
+    private double green = 0;
+    private double blue = 0;
+
+    private int Delta = 50;
 
     @FXML
     void initialize() {
         ButtonMain.setOnAction(this::OnClickMainButton);
         btChoice.setOnAction(this::OnClickChoiceButton);
+        ButSettingsDefalt.setOnAction(this::OnClickDefaltSettingsButton);
         /*ButtonMain.setOnAction(event -> {
             frame frame1 = new frame();
 
@@ -136,6 +155,19 @@ public class HelloController {
          */
 
 
+        RButColor.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(!RButColor.isSelected()) {
+                    colorPicker1.setDisable(false);
+                    DeltaTextField.setDisable(false);
+                }
+                else{
+                    colorPicker1.setDisable(true);
+                    DeltaTextField.setDisable(true);
+                }
+            }
+        });
 
         colorPicker1.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -146,12 +178,10 @@ public class HelloController {
             }
         });
 
-        colorPicker2.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                //circleColor.setFill(colorPicker.getValue());
-                System.out.println("Color2  = " + colorPicker2.getValue());
+        DeltaTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                DeltaTextField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
 
@@ -191,6 +221,20 @@ public class HelloController {
             }
         });
 
+    }
+
+    private void OnClickDefaltSettingsButton(ActionEvent event) {
+
+        RButColor.setSelected(true);
+        colorPicker1.setDisable(true);
+        DeltaTextField.setDisable(true);
+        DeltaTextField.setText(String.valueOf(50));
+        dpTextField.setText(String.valueOf(1));
+        minDistTextField.setText(String.valueOf(8));
+        param1TextField.setText(String.valueOf(100));
+        param2TextField.setText(String.valueOf(15));
+        minRadiusTextField.setText(String.valueOf(300));
+        maxRadiusTextField.setText(String.valueOf(400));
     }
 
     public void OnClickChoiceButton(ActionEvent event) {
@@ -243,6 +287,34 @@ public class HelloController {
                     Integer.parseInt(minDistTextField.getText()), Integer.parseInt(param1TextField.getText()),
                     Integer.parseInt(param2TextField.getText()), Integer.parseInt(minRadiusTextField.getText()),
                     Integer.parseInt(maxRadiusTextField.getText()));
+
+            System.out.println("Button click");
+
+            ColorParams colorParams;
+
+            if(RButColor.isSelected())
+            {
+                System.out.println("RB is selected");
+
+                ISAutomaticColor = false;
+                red = 255;
+                green = 0;
+                blue = 0;
+                Delta = 50;
+                colorParams = new ColorParams(ISAutomaticColor, red, green, blue, Delta);
+
+
+            }
+            else {
+                System.out.println("RB is not selected");
+
+                ISAutomaticColor = true;
+                red = colorPicker1.getValue().getRed();
+                green = colorPicker1.getValue().getGreen();
+                blue = colorPicker1.getValue().getBlue();
+                Delta = Integer.parseInt(DeltaTextField.getText());
+                colorParams = new ColorParams(ISAutomaticColor, red, green, blue, Delta);
+            }
 
             if (TextFieldDir.getText().length() == 0) {
                 MessegeBoxError("Error path!", "Path not selected!", "Enter or select the correct path");
@@ -298,6 +370,7 @@ public class HelloController {
 
 
                         task.setParameters(temp);
+                        task.SetColorParams(colorParams);
                         task.SetFrames(NewFrames);
                         task.SetHelloController(this);
                         task.SetPath(TextFieldDir.getText());
@@ -305,7 +378,7 @@ public class HelloController {
                         new Thread(task).start();
                     } else {
                         //NewFrames.MainProcess(TextFieldDir.getText(), ".jpg");
-                        NewFrames.MainProcessVariable2(TextFieldDir.getText(), ".jpg", temp);
+                        NewFrames.MainProcessVariable2(TextFieldDir.getText(), ".jpg", temp, new ColorParams(false, 255, 0, 0, 50));
                     }
 
                     IsProcessing = false;

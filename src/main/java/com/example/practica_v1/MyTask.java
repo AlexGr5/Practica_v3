@@ -12,6 +12,8 @@ public class MyTask extends Task {
 
     private RecognitionParameters parameters;
 
+    private ColorParams colorParams;
+
     public void SetHelloController(HelloController HelloController1)
     {
         HCController = HelloController1;
@@ -37,7 +39,7 @@ public class MyTask extends Task {
         //}
         Frames.SetMyTask(this);
         //Frames.MainProcess(Path, ".jpg");
-        Frames.MainProcessVariable2(Path, ".jpg", parameters);
+        Frames.MainProcessVariable2(Path, ".jpg", parameters, colorParams);
 
         return null;
     }
@@ -55,4 +57,6 @@ public class MyTask extends Task {
     public void setParameters(RecognitionParameters parameters) {
         this.parameters = parameters;
     }
+
+    public void SetColorParams(ColorParams newColorParams){colorParams = newColorParams;}
 }

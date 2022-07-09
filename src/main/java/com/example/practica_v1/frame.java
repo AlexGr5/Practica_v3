@@ -285,6 +285,75 @@ public void IncreasingSaturation() {
     }
 
 
+    public void OriginalToMainColorAlternative(ColorParams colorParams)
+    {
+        Mat WorkImg = imgTemp.GetImg();
+
+        if (WorkImg.empty())
+        {
+            ;
+        }
+        else {
+            // Создаём новое пустое изображение, такого же размера
+            imgMainColor.SetImg(new Mat(WorkImg.rows(), WorkImg.cols(), WorkImg.type()));
+
+            int channels = WorkImg.channels();// Получить количество каналов изображения
+            double[] pixel = new double[3];
+
+            // Обработаем каждый пиксель исходного изображения
+            for (int x = 0; x < WorkImg.rows(); x++) {          // цикл по ширине
+                for (int y = 0; y < WorkImg.cols(); y++) {       // цикл по высоте
+
+                    // Получаем цвет текущего пикселя
+                    pixel = WorkImg.get(x, y).clone();
+
+                    // Получаем красную, зелёную и синюю составляющую цвета
+                    double blue = pixel[0];
+                    double green = pixel[1];
+                    double red = pixel[2];
+
+
+                    // Если красного много - сделаем полносью красный
+                    //if ((red > (blue + mainColor)) && (red > (green + mainColor))) {
+                    if(Math.sqrt((colorParams.getRed() - red)*(colorParams.getRed() - red)+(colorParams.getGreen() - green)*
+                            (colorParams.getGreen() - green)+(colorParams.getBlue() - blue)*(colorParams.getBlue() - blue)) <= colorParams.getDelta()){
+                        red = 255;
+                        green = 0;
+                        blue = 0;
+                    }
+                    // иначе пусть будет белый цвет (255,255,255) (черный - RGB=(0,0,0))
+                    else {
+                        red = 255;
+                        green = 255;
+                        blue = 255;
+                    }
+
+                    //double newRed = red;
+                    //double newBlue = blue;
+                    //double newGreen = green;
+
+
+                    pixel[0] = blue;
+                    pixel[1] = green;
+                    pixel[2] = red;
+                    //imgTemp.put(x, y, pixel);
+
+                    // Создадим новый цвет
+                    //Scalar newColor = new Scalar(newRed, newGreen, newBlue, 0);
+
+                    // Установим этот цвет в пиксель нового изображения
+                    //im2.put(x, y, arr);
+                    imgMainColor.GetImg().put(x, y, pixel);
+                }
+            }
+            // Сохраним результат в файл
+            //File output = new File("step1.jpg");
+            //ImageIO.write(im2, "jpg", output);
+        }
+    }
+
+
+
     public void SaturationImgToWightAndBlack()
     {
         if (imgTemp.GetImg().empty()) {
@@ -388,11 +457,15 @@ public void IncreasingSaturation() {
         return Res;
     }
 
-    public synchronized void WorkWithFrame(RecognitionParameters parameters)
+    public synchronized void WorkWithFrame(RecognitionParameters parameters, ColorParams NewColorParams)
     {
         IncreasingSaturation();
         BlurRichImg();
-        OriginalToMainColor();
+        if(NewColorParams.isISAutomaticColor())
+            OriginalToMainColorAlternative(NewColorParams);
+        else {
+            OriginalToMainColor();
+        }
         MainColorToGray();
         //BlurWightBlackImg();
         RecognizeAndDrawCircles(parameters);
@@ -412,5 +485,4 @@ public void IncreasingSaturation() {
     {
         ;
     }
-
 }

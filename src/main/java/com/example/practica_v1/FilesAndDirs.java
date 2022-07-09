@@ -21,6 +21,8 @@ public class FilesAndDirs {
 
     protected RecognitionParameters paramsRecogn;
 
+    protected ColorParams colorParams;
+
     volatile protected MyTask myTask;
 
     public void SetMyTask(MyTask myTask1)
@@ -48,6 +50,12 @@ public class FilesAndDirs {
     {
         paramsRecogn = new RecognitionParameters(parameters.getDp(), parameters.getDenominatorOfMinDist(),
                 parameters.getParam1(), parameters.getParam2(),parameters.getMinRadius(),parameters.getMaxRadius());
+    }
+
+    public void SetColorParams(ColorParams NewColorParams)
+    {
+        colorParams = new ColorParams(NewColorParams.isISAutomaticColor(), NewColorParams.getRed(),
+                NewColorParams.getGreen(), NewColorParams.getBlue(), NewColorParams.getDelta());
     }
 
     public void SetDirPath(String path)
@@ -333,7 +341,7 @@ public class FilesAndDirs {
 
             // = new frame(DirPath, ListOfNeededFiles.get(i));
 
-            ListOfFrames.get(i).WorkWithFrame(paramsRecogn);
+            ListOfFrames.get(i).WorkWithFrame(paramsRecogn, colorParams);
 
             if (ListOfFrames.get(i).GetIsRecognized())
             {
@@ -351,9 +359,10 @@ public class FilesAndDirs {
     }
 
 
-    public void MainProcessVariable2(String Path, String TypeOfFiles, RecognitionParameters parameters)
+    public void MainProcessVariable2(String Path, String TypeOfFiles, RecognitionParameters parameters, ColorParams NewColorParams)
     {
         SetParamsRecognized(parameters);
+        SetColorParams(NewColorParams);
         SetDirPath(Path);
         SelectTypeFilesOfListFiles(FilesInDirToList(Path), ".jpg");
         CreateWorkingDirs(Path);

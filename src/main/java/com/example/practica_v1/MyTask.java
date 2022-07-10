@@ -32,13 +32,7 @@ public class MyTask extends Task {
 
     @Override
     public Void call() throws Exception {
-        //int max = 10;
-        //for (int i = 1; i <= max; i++) {
-        //    updateProgress(i,max);
-        //    Thread.sleep(200);
-        //}
         Frames.SetMyTask(this);
-        //Frames.MainProcess(Path, ".jpg");
         Frames.MainProcessVariable2(Path, ".jpg", parameters, colorParams);
 
         return null;

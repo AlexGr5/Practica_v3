@@ -2,12 +2,6 @@ package com.example.practica_v1;
 
 public class RecognitionParameters {
 
-    //private int red;
-
-    //private int green;
-
-    //private int blue;
-
     private int dp;
 
     private int denominatorOfMinDist;
@@ -25,11 +19,8 @@ public class RecognitionParameters {
         ;
     }
 
-    public RecognitionParameters(/*int Red, int Green, int Blue,*/ int DP, int DenominatorOfMinDist, int Param1, int Param2, int MinRadius, int MaxRadius)
+    public RecognitionParameters(int DP, int DenominatorOfMinDist, int Param1, int Param2, int MinRadius, int MaxRadius)
     {
-        //setRed(Red);
-        //setGreen(Green);
-        //setBlue(Blue);
         setDp(DP);
         setDenominatorOfMinDist(DenominatorOfMinDist);
         setParam1(Param1);
@@ -38,11 +29,8 @@ public class RecognitionParameters {
         setMaxRadius(MaxRadius);
     }
 
-    public void SetRecognitionParameters(/*int Red, int Green, int Blue,*/ int DP, int DenominatorOfMinDist, int Param1, int Param2, int MinRadius, int MaxRadius)
+    public void SetRecognitionParameters(int DP, int DenominatorOfMinDist, int Param1, int Param2, int MinRadius, int MaxRadius)
     {
-        //setRed(Red);
-        //setGreen(Green);
-        //setBlue(Blue);
         setDp(DP);
         setDenominatorOfMinDist(DenominatorOfMinDist);
         setParam1(Param1);
@@ -51,30 +39,6 @@ public class RecognitionParameters {
         setMaxRadius(MaxRadius);
     }
 
-
-   // public int getRed() {
-   //     return red;
-   // }
-
-   // public void setRed(int red) {
-    //    this.red = red;
-    //}
-
-    //public int getGreen() {
-    //    return green;
-    //}
-
-    //public void setGreen(int green) {
-    //    this.green = green;
-    //}
-
-    //public int getBlue() {
-     //   return blue;
-    //}
-
-    //public void setBlue(int blue) {
-    //    this.blue = blue;
-    //}
 
     public int getDp() {
         return dp;

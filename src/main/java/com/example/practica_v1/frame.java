@@ -1,7 +1,7 @@
 package com.example.practica_v1;
 
 import org.opencv.core.Core;
-import org.opencv.imgcodecs.Imgcodecs;
+
 import org.opencv.imgproc.Imgproc;
 
 import org.opencv.core.Mat;
@@ -9,32 +9,11 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
 
-import org.opencv.core.CvType;
-import org.opencv.core.Point;
-import java.awt.Color;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 import org.opencv.core.Size;
 
 public class frame {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
-
-    /*
-    private Mat imgOriginal;
-    private String pathOriginal;
-    private String nameOriginal;
-
-    private Mat imgTemp;
-
-    private Mat imgMainColor;
-    private String pathMainColor;
-    private Mat imgWhiteBlack;
-    private String pathWhiteBlack;
-    private Mat imgRecognized;
-    private String pathRecognized;
-     */
-
 
     private ImgInFormatMat imgOriginal;
     private ImgInFormatMat imgTemp;
@@ -103,49 +82,16 @@ public class frame {
         if(imgOriginal.ReadImg(path, "original"))
             return true;
         else return false;
-        /*
-        this.imgOriginal = Imgcodecs.imread(path + "/" + name);
-        this.pathOriginal = new String(path);
-        this.nameOriginal = new String(name);
-        if (this.imgOriginal.empty()) {
-            System.out.println("Failed to load original image");
-            return false;
-        }
-        else {
-            System.out.println("File:' " + pathOriginal + "/" + nameOriginal + " opened");
-            return true;
-        }
-         */
     }
 
     public void WriteOriginal(String newFullPath) {
 
         imgOriginal.WriteImg(newFullPath, "original");
-
-        /*
-        boolean st = Imgcodecs.imwrite(newFullPath, imgOriginal);
-        if (!st) {
-            System.out.println("Failed to save original image");
-        }
-        else {
-            System.out.println("File:' " + newFullPath + " saved");
-        }
-        */
-
     }
 
     public void WriteMainColor(String newFullPath) {
 
         imgMainColor.WriteImg(newFullPath, "MainColor");
-        /*
-        boolean st = Imgcodecs.imwrite(newFullPath, imgMainColor);
-        if (!st) {
-            System.out.println("Failed to save image in primary color");
-        }
-        else {
-            System.out.println("File:' " + newFullPath + " saved");
-        }
-         */
     }
 
 
@@ -153,46 +99,18 @@ public class frame {
 
         imgTemp.WriteImg(newFullPath, "temp");
 
-        /*
-        boolean st = Imgcodecs.imwrite(newFullPath, imgTemp);
-        if (!st) {
-            System.out.println("Failed to save 'rich' image");
-        }
-        else {
-            System.out.println("File:' " + newFullPath + " saved");
-        }
-         */
     }
 
     public void WriteWhiteBlack(String newFullPath) {
 
         imgWhiteBlack.WriteImg(newFullPath, "White and Black");
 
-        /*
-        boolean st = Imgcodecs.imwrite(newFullPath, imgWhiteBlack);
-        if (!st) {
-            System.out.println("Failed to save black and white image");
-        }
-        else {
-            System.out.println("File:' " + newFullPath + " saved");
-        }
-         */
     }
 
     public void WriteRecognised(String newFullPath) {
 
         imgOriginal.WriteImg(newFullPath, "original");
 
-        /*
-        if (!imgRecognized.empty()) {
-            boolean st = Imgcodecs.imwrite(newFullPath, imgRecognized);
-            if (!st) {
-                System.out.println("Failed to save recognized image");
-            } else {
-                System.out.println("File:' " + newFullPath + " saved");
-            }
-        }
-         */
     }
 
 public void IncreasingSaturation() {
@@ -260,27 +178,15 @@ public void IncreasingSaturation() {
                         blue = 255;
                     }
 
-                    //double newRed = red;
-                    //double newBlue = blue;
-                    //double newGreen = green;
-
 
                     pixel[0] = blue;
                     pixel[1] = green;
                     pixel[2] = red;
-                    //imgTemp.put(x, y, pixel);
-
-                    // Создадим новый цвет
-                    //Scalar newColor = new Scalar(newRed, newGreen, newBlue, 0);
 
                     // Установим этот цвет в пиксель нового изображения
-                    //im2.put(x, y, arr);
                     imgMainColor.GetImg().put(x, y, pixel);
                 }
             }
-            // Сохраним результат в файл
-            //File output = new File("step1.jpg");
-            //ImageIO.write(im2, "jpg", output);
         }
     }
 
@@ -312,10 +218,9 @@ public void IncreasingSaturation() {
                     double green = pixel[1];
                     double red = pixel[2];
 
-                    double maxValuePixel;
+
                     double maxValueColor;
 
-                    maxValuePixel = Math.max(Math.max(red, green),blue);
                     maxValueColor = Math.max(Math.max(colorParams.getRed(), colorParams.getGreen()), colorParams.getBlue());
 
                     double mainChoiceColor = 0;
@@ -338,16 +243,7 @@ public void IncreasingSaturation() {
                         addColor2 = red;
                     }
 
-                    // Если красного много - сделаем полносью красный
-                    //if ((red > (blue + mainColor)) && (red > (green + mainColor))) {
-                    /*if(    Math.sqrt((colorParams.getRed() - red)*(colorParams.getRed() - red)+
-                            (colorParams.getGreen() - green)*(colorParams.getGreen() - green)
-                            +(colorParams.getBlue() - blue)*(colorParams.getBlue() - blue)) <= colorParams.getDelta()
-                               ||     ((Math.abs(maxValueColor - mainChoiceColor) <= colorParams.getDelta())) ){ */
-                    //if ((maxValueColor > (addColor1 + colorParams.getDelta())) && (maxValueColor > (addColor2 + colorParams.getDelta()))) {
-                    /*if ((Math.abs(red - colorParams.getRed())) <= colorParams.getDelta() &&
-                            Math.abs(green - colorParams.getGreen()) >= colorParams.getDelta() &&
-                            Math.abs(blue - colorParams.getBlue()) >= colorParams.getDelta()) {*/
+                    // Если основного много - сделаем полносью красный
                     if ((mainChoiceColor > (addColor1 + colorParams.getDelta())) &&
                             (mainChoiceColor > (addColor2 + colorParams.getDelta()))){
                         red = 255;
@@ -361,57 +257,17 @@ public void IncreasingSaturation() {
                         blue = 255;
                     }
 
-                    //double newRed = red;
-                    //double newBlue = blue;
-                    //double newGreen = green;
-
 
                     pixel[0] = blue;
                     pixel[1] = green;
                     pixel[2] = red;
-                    //imgTemp.put(x, y, pixel);
 
-                    // Создадим новый цвет
-                    //Scalar newColor = new Scalar(newRed, newGreen, newBlue, 0);
 
                     // Установим этот цвет в пиксель нового изображения
-                    //im2.put(x, y, arr);
                     imgMainColor.GetImg().put(x, y, pixel);
                 }
             }
-            // Сохраним результат в файл
-            //File output = new File("step1.jpg");
-            //ImageIO.write(im2, "jpg", output);
         }
-    }
-
-
-
-    public void SaturationImgToWightAndBlack()
-    {
-        if (imgTemp.GetImg().empty()) {
-            System.out.println("Saturation Img is empty");
-            return;
-        }
-
-        Mat img = imgTemp.GetImg().clone();
-
-        //CvUtilsFX.showImage(img, "Оригинал");
-        Mat hsv = new Mat();
-        Imgproc.cvtColor(img, hsv, Imgproc.COLOR_BGR2HSV);
-        Mat h = new Mat();
-        Core.extractChannel(hsv, h, 0);
-        Mat img2 = new Mat();
-        Core.inRange(h, new Scalar(40), new Scalar(80), img2);
-        //CvUtilsFX.showImage(img2, "Зеленый");
-        Core.inRange(h, new Scalar(100), new Scalar(140), img2);
-        //CvUtilsFX.showImage(img2, "Синий");
-        Core.inRange(hsv, new Scalar(0, 200, 200), new Scalar(20, 256, 256), img2);
-        //CvUtilsFX.showImage(img2, "Красный");
-        Core.inRange(hsv, new Scalar(0, 0, 0), new Scalar(0, 0, 50), img2);
-        //CvUtilsFX.showImage(img2, "Черный");
-
-        imgWhiteBlack.SetImg(img2.clone());
     }
 
 
@@ -431,47 +287,6 @@ public void IncreasingSaturation() {
         }
     }
 
-
-    /*
-    public void TestCircles()
-    {
-
-        Mat workImg = imgWhiteBlack;
-
-        Mat circles = new Mat();
-        //Imgproc.HoughCircles(imgWhiteBlack, circles, Imgproc.HOUGH_GRADIENT,
-        //        2, imgWhiteBlack.cols() imgWhiteBlack.rows() / 4 );
-        Imgproc.HoughCircles(workImg, circles, Imgproc.HOUGH_GRADIENT,1, workImg.rows() / 8, 100, 15, 0, 0);
-        Scalar white = new Scalar(255, 255, 255);
-        Scalar purple = new Scalar(255, 0, 0);
-        double b = 0;
-        int w = 255;
-        Mat result = new Mat(workImg.size(), CvType.CV_8UC3, white);
-
-        //Mat result = imgOriginal;
-
-        //===
-        System.out.println("Arrays circles");
-        System.out.println(circles.dump());
-        //===
-
-        for (int i = 0, r = circles.rows(); i < r; i++) {
-            for (int j = 0, c = circles.cols(); j < c; j++) {
-                double[] circle = circles.get(i, j);
-
-                //===
-                System.out.println(Arrays.toString(circle));
-                //===
-
-                //Imgproc.circle(result, new Point(circle[0], circle[1]),
-                //        (int) circle[2], purple);
-                Imgproc.rectangle(result, new Point(circle[0] - circle[2], circle[1] - circle[2]),
-                        new Point(circle[0] + circle[2], circle[1] + circle[2]), purple, 5);
-            }
-        }
-        imgRecognized = result;
-    }
-     */
 
     public boolean RecognizeAndDrawCircles(RecognitionParameters parameters)
     {
@@ -514,8 +329,4 @@ public void IncreasingSaturation() {
         Imgproc.blur(imgWhiteBlack.GetImg(), imgWhiteBlack.GetImg(), new Size(3, 3));
     }
 
-    public void OriginalToWhiteBlack()
-    {
-        ;
-    }
 }

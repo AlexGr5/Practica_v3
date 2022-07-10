@@ -9,8 +9,6 @@ public class ImgInFormatMat {
 
     private String Path;
 
-    //private String Name;
-
     private String info;
 
 

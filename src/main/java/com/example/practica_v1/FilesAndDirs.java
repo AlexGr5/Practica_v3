@@ -17,8 +17,6 @@ public class FilesAndDirs {
 
     volatile protected List<frame> ListOfFrames = new ArrayList<frame>();
 
-    protected frame CurrentFrame;
-
     protected RecognitionParameters paramsRecogn;
 
     protected ColorParams colorParams;
@@ -103,13 +101,6 @@ public class FilesAndDirs {
 
         ListOfNeededFiles = (ArrayList<String>)ArrType.clone();
 
-        /*
-        for (int i = 0; i < ArrType.size(); i++) {
-
-            System.out.println(ArrType.get(i));
-        }
-        */
-
         return ArrType;
     }
 
@@ -130,163 +121,9 @@ public class FilesAndDirs {
             if(dirUnsuccessful.CreateDir())
                 if(dirTemp.CreateDir())
                     Res = true;
-        
-        /*
-        Path pathSuccessful = Paths.get(MainPath + SuccessfulName);
-        Path pathUnsuccessful = Paths.get(MainPath + UnsuccessfulName);
-        Path pathTemp = Paths.get(MainPath + TempName);
-        Path pathScene = Paths.get(MainPath + SceneName);
-        
-        if (!Files.exists(pathSuccessful)) {
-            try {
-                Files.createDirectory(pathSuccessful);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Res = true;
-            System.out.println("New Directory created !   "+MainPath + SuccessfulName);
-
-            if (!Files.exists(pathUnsuccessful)) {
-                try {
-                    Files.createDirectory(pathUnsuccessful);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                System.out.println("New Directory created !   "+MainPath + UnsuccessfulName);
-                Res = true;
-
-                if (!Files.exists(pathTemp)) {
-                    try {
-                        Files.createDirectory(pathTemp);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Res = true;
-                    System.out.println("New Directory created !   "+MainPath + TempName);
-
-                    if (!Files.exists(pathScene)) {
-                        try {
-                            Files.createDirectory(pathScene);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        Res = true;
-                        System.out.println("New Directory created !   "+MainPath + SceneName);
-
-
-                    } else {
-                        Res = false;
-                        System.out.println("Directory already exists");
-                    }
-
-                } else {
-                    Res = false;
-                    System.out.println("Directory already exists");
-                }
-
-            } else {
-                System.out.println("Directory already exists");
-                Res = false;
-            }
-
-        } else {
-            Res = false;
-            System.out.println("Directory already exists");
-        }
-         */
 
         return Res;
     }
-
-    /*
-    public boolean LoadListFrames()
-    {
-        boolean Res = false;
-
-        if (DirPath.length() > 0)
-        {
-            if (ListOfNeededFiles.size() > 0)
-            {
-                Res = true;
-
-                for (int i = 0; i < ListOfNeededFiles.size(); i++) {
-                    ListOfFrames.add(new frame(DirPath, ListOfNeededFiles.get(i)));
-                }
-            }
-        }
-
-        return Res;
-    }
-     */
-
-
-    /*
-    public void ProcessingFrames()
-    {
-        for (int i = 0; i < ListOfNeededFiles.size(); i++) {
-            ListOfFrames.get(i).WorkWithFrame();
-
-            if (ListOfFrames.get(i).GetIsRecognized())
-            {
-                System.out.println("Img " + DirPath + "/" + ListOfNeededFiles.get(i) + " is recognized!");
-            }
-            else {
-
-                System.out.println("Img " + DirPath + "/" + ListOfNeededFiles.get(i) + " is not recognized!");
-            }
-            myTask.updateProgress((long)i,(long)ListOfNeededFiles.size());
-        }
-    }
-     */
-
-
-    /*
-    public void SaveFrames()
-    {
-        for (int i = 0; i < ListOfNeededFiles.size(); i++) {
-            StringBuffer SBName = new StringBuffer(ListOfNeededFiles.get(i));
-
-            StringBuffer NameTempImg = new StringBuffer(SBName);
-            NameTempImg.insert(SBName.length() - TypeOfNeedFiles.length(), "_temp");
-
-            StringBuffer NameMainColorImg = new StringBuffer(SBName);
-            NameMainColorImg.insert(SBName.length() - TypeOfNeedFiles.length(), "_MC");
-
-            StringBuffer NameWightBlackImg = new StringBuffer(SBName);
-            NameWightBlackImg.insert(SBName.length() - TypeOfNeedFiles.length(), "_WB");
-
-            StringBuffer NameRecognImg = new StringBuffer(SBName);
-            NameRecognImg.insert(SBName.length() - TypeOfNeedFiles.length(), "_Recogn");
-
-            ListOfFrames.get(i).WriteTemp(DirPath + "/Temp/" + NameTempImg);
-            ListOfFrames.get(i).WriteMainColor(DirPath + "/Temp/" + NameMainColorImg);
-            ListOfFrames.get(i).WriteWhiteBlack(DirPath + "/Temp/" + NameWightBlackImg);
-
-            if (ListOfFrames.get(i).GetIsRecognized()) {
-                ListOfFrames.get(i).WriteRecognised(DirPath + "/Successful/" + NameRecognImg);
-            }
-            else {
-                ListOfFrames.get(i).WriteOriginal(DirPath + "/Unsuccessful/" + ListOfNeededFiles.get(i));
-            }
-        }
-    }
-     */
-
-
-    /*
-    public void MainProcess(String Path, String TypeOfFiles)
-    {
-        SetDirPath(Path);
-        SelectTypeFilesOfListFiles(FilesInDirToList(Path), ".jpg");
-        CreateWorkingDirs(Path);
-
-        LoadListFrames();
-        ProcessingFrames();
-        SaveFrames();
-
-        System.out.println("\n\nRecognizing end");
-    }
-     */
 
 
     public void SaveFrame(int index)
@@ -370,6 +207,7 @@ public class FilesAndDirs {
         ImageListProcessing();
 
         System.out.println("\n\nRecognizing end");
+
     }
 
 

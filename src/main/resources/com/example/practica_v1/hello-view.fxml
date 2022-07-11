@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
@@ -27,27 +28,27 @@
       <TextField fx:id="TextFieldDir" layoutX="21.0" layoutY="132.0" prefHeight="25.0" prefWidth="219.0" />
       <Button fx:id="btChoice" layoutX="147.0" layoutY="83.0" mnemonicParsing="false" text="Выбрать" />
       <ProgressBar fx:id="ProgressBarMain" layoutX="21.0" layoutY="384.0" prefWidth="200.0" progress="0.0" />
-      <Label layoutX="360.0" layoutY="55.0" text="Original">
+      <Label layoutX="293.0" layoutY="55.0" text="Оригинальное">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="587.0" layoutY="55.0" text="Saturated color">
+      <Label layoutX="489.0" layoutY="55.0" text="Повышенная насыщенность">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="852.0" layoutY="55.0" text="Main Color">
+      <Label layoutX="807.0" layoutY="55.0" text="Основной цвет">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="LabelRecognized" layoutX="1121.0" layoutY="55.0" text="Recognized">
+      <Label fx:id="LabelRecognized" layoutX="1098.0" layoutY="55.0" text="Распознанное">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="21.0" layoutY="356.0" text="Progress" />
+      <Label layoutX="21.0" layoutY="356.0" text="Прогресс" />
       <Line endX="1211.2857666015625" layoutX="115.0" layoutY="494.0" startX="-100.0" />
       <ColorPicker fx:id="colorPicker1" disable="true" layoutX="263.0" layoutY="535.0">
          <value>
@@ -55,23 +56,44 @@
          </value></ColorPicker>
       <Label fx:id="labelColor" layoutX="246.0" layoutY="506.0" text="Выбор цвета распознования" />
       <TextField fx:id="dpTextField" layoutX="489.0" layoutY="535.0" prefHeight="25.0" prefWidth="46.0" text="1" />
-      <Label layoutX="447.0" layoutY="506.0" text="Разрешение сумматора" />
+      <Label fx:id="labelDP" layoutX="447.0" layoutY="506.0" text="Разрешение сумматора">
+         <tooltip>
+            <Tooltip text="Обратное отношение разрешения аккумулятора к разрешению изображения. Например, если dp=1, аккумулятор имеет то же разрешение, что и входное изображение. Если dp=2, аккумулятор имеет половину ширины и высоты. Для #HOUGH_GRADIENT_ALT рекомендуемое значение dp=1,5, если только не нужно обнаруживать очень маленькие круги." wrapText="true" />
+         </tooltip></Label>
       <TextField fx:id="minDistTextField" layoutX="645.0" layoutY="537.0" prefHeight="25.0" prefWidth="46.0" text="8" />
-      <Label layoutX="594.0" layoutY="506.0" text="Мин раст между центрами" />
+      <Label fx:id="labelMinDist" layoutX="594.0" layoutY="506.0" text="Мин раст между центрами">
+         <tooltip>
+            <Tooltip text="Измеряется в пикселях" />
+         </tooltip></Label>
       <TextField fx:id="param1TextField" layoutX="773.0" layoutY="537.0" prefHeight="25.0" prefWidth="56.0" text="100" />
-      <Label layoutX="781.0" layoutY="506.0" text="param1" />
+      <Label fx:id="labrlParam1" layoutX="781.0" layoutY="506.0" text="param1">
+         <tooltip>
+            <Tooltip text="это более высокий порог из двух, переданных детектору ребер Канни (нижний в два раза меньше)" />
+         </tooltip></Label>
       <TextField fx:id="param2TextField" layoutX="863.0" layoutY="537.0" prefHeight="25.0" prefWidth="56.0" text="15" />
-      <Label layoutX="869.0" layoutY="506.0" text="param2" />
+      <Label fx:id="labelParam2" layoutX="869.0" layoutY="506.0" text="param2">
+         <tooltip>
+            <Tooltip text="это порог накопителя для центров кругов на этапе обнаружения. Чем он меньше, тем больше ложных кругов может быть обнаружено. Кружки, соответствующие большим значениям аккумулятора, будут возвращены первыми." />
+         </tooltip></Label>
       <TextField fx:id="minRadiusTextField" layoutX="955.0" layoutY="537.0" prefHeight="25.0" prefWidth="56.0" text="300" />
-      <Label layoutX="955.0" layoutY="506.0" text="minRadius" />
+      <Label fx:id="labelMinRadius" layoutX="955.0" layoutY="506.0" text="minRadius">
+         <tooltip>
+            <Tooltip text="Измеряется в пикселях" />
+         </tooltip></Label>
       <TextField fx:id="maxRadiusTextField" layoutX="1044.0" layoutY="537.0" prefHeight="25.0" prefWidth="56.0" text="400" />
-      <Label layoutX="1043.0" layoutY="506.0" text="maxRadius" />
+      <Label fx:id="labelMaxRadius" layoutX="1043.0" layoutY="506.0" text="maxRadius">
+         <tooltip>
+            <Tooltip text="Измеряется в пикселях" />
+         </tooltip></Label>
       <Line endX="123.00003051757812" endY="1.52587890625E-5" layoutX="121.0" layoutY="233.0" startX="-104.42855834960938" startY="1.52587890625E-5" />
       <Line endX="115.14285278320312" endY="-1.6428680419921875" layoutX="129.0" layoutY="67.0" startX="-113.42855834960938" startY="-1.6428680419921875" />
       <Line endX="-98.92855834960938" endY="-194.1428680419922" layoutX="115.0" layoutY="261.0" startX="-98.92855834960938" startY="-28.499984741210938" />
       <Line endX="97.64285278320312" endY="-202.1428680419922" layoutX="147.0" layoutY="267.0" startX="97.50003051757812" startY="-34.49998474121094" />
       <RadioButton fx:id="RButColor" layoutX="35.0" layoutY="539.0" mnemonicParsing="false" selected="true" text="Автоматический красный цвет" />
-      <Label layoutX="252.0" layoutY="588.0" text="Погрешность" />
+      <Label fx:id="labelDelta" layoutX="252.0" layoutY="588.0" text="Погрешность">
+         <tooltip>
+            <Tooltip text="Разность между максимальным по значению градиентом выбранного цвета формата RGB и градиентом пикселя (значения от 0 до 255)" />
+         </tooltip></Label>
       <TextField fx:id="DeltaTextField" disable="true" layoutX="347.0" layoutY="584.0" prefHeight="25.0" prefWidth="46.0" text="50" />
       <Button fx:id="ButSettingsDefalt" layoutX="1150.0" layoutY="535.0" mnemonicParsing="false" text="Настройки по умолчанию" />
    </children>

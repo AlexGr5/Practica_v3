@@ -48,7 +48,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="21.0" layoutY="356.0" text="Прогресс" />
+      <Label fx:id="labelProgress" layoutX="21.0" layoutY="356.0" text="Прогресс" />
       <Line endX="1211.2857666015625" layoutX="115.0" layoutY="494.0" startX="-100.0" />
       <ColorPicker fx:id="colorPicker1" disable="true" layoutX="263.0" layoutY="535.0">
          <value>
